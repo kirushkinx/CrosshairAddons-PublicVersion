@@ -86,9 +86,6 @@ public abstract class DrawContextMixin {
 
     @Unique
     private int calculateOffsetY() {
-        if (ConfigManager.maceIndicator && ((CrosshairRendererManager.INSTANCE.recentMaceDamage > 5 && ConfigManager.showHitDamage) || CrosshairRendererManager.INSTANCE.isHoldingMace())) {
-            return (CrosshairRendererManager.INSTANCE.isWearingElytra() && ConfigManager.elytraIndicator) ? 34 : 24;
-        }
         return (CrosshairRendererManager.INSTANCE.isWearingElytra() && ConfigManager.elytraIndicator) ? 24 : 16;
     }
 }

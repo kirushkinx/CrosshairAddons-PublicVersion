@@ -15,7 +15,6 @@ public class ClientPlayerEntityMixin {
     {
         if (!ConfigManager.modEnabled) return;
         CrosshairRendererManager.INSTANCE.onTick();
-        FallDistanceManager.getInstance().onClientTick();
     }
 
 }

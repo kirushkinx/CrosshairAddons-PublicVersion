@@ -6,8 +6,7 @@
     "GameRendererMixin",
     "ClientPlayerEntityMixin",
     "ClientPlayNetworkHandlerMixin",
-    "DrawContextMixin",
-    "ClientPlayerInteractionManagerMixin"
+    "DrawContextMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
