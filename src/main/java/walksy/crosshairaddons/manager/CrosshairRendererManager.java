@@ -46,9 +46,23 @@ public class CrosshairRendererManager {
             RenderSystem.enableBlend();
             RenderSystem.blendFuncSeparate(GlStateManager.SrcFactor.ONE_MINUS_DST_COLOR, GlStateManager.DstFactor.ONE_MINUS_SRC_COLOR, GlStateManager.SrcFactor.ONE, GlStateManager.DstFactor.ZERO);
         }
+
         if ((ConfigManager.playerIndicator && this.client.targetedEntity instanceof PlayerEntity) || (this.client.targetedEntity instanceof MobEntity && ConfigManager.mobIndicator)) {
             context.drawTexture(this.CUSTOM_MOD_ICONS, (context.getScaledWindowWidth() - 9) / 2, (context.getScaledWindowHeight() - 9) / 2, 0, 0, 9, 9);
         }
+
+        boolean showShieldForOtherPlayer = ConfigManager.shieldIndicator && this.client.targetedEntity instanceof PlayerEntity &&
+                ((PlayerEntity) this.client.targetedEntity).isUsingItem() &&
+                ((PlayerEntity) this.client.targetedEntity).getActiveItem().isOf(Items.SHIELD);
+
+        boolean showShieldForSelf = ConfigManager.shieldSelfIndicator && this.client.player != null &&
+                this.client.player.isUsingItem() &&
+                this.client.player.getActiveItem().isOf(Items.SHIELD);
+
+        if (showShieldForOtherPlayer || showShieldForSelf) {
+            context.drawTexture(this.CUSTOM_MOD_ICONS, (context.getScaledWindowWidth() - 13) / 2, (context.getScaledWindowHeight() - 14) / 2 + 1, 35, 1, 13, 14);
+        }
+
         int offsetY = 0; // Offset for the elytra indicator
 
         // Render elytra indicator
@@ -109,9 +123,9 @@ public class CrosshairRendererManager {
         }
 
         context.drawTexture(CUSTOM_MOD_ICONS,
-            (context.getScaledWindowWidth() - 10) / 2,
-            (context.getScaledWindowHeight() - 11) / 2,
-            24, 0, 10, 10);
+                (context.getScaledWindowWidth() - 10) / 2,
+                (context.getScaledWindowHeight() - 11) / 2,
+                24, 0, 10, 10);
 
         if (fade)
         {
@@ -136,9 +150,9 @@ public class CrosshairRendererManager {
         int frameIndex = animationCompleted ? (numFrames - 1) : Math.min((this.hitMarkerDisplayTicks / frameDuration), numFrames - 1);
 
         context.drawTexture(CUSTOM_MOD_ICONS,
-            (context.getScaledWindowWidth() - 10) / 2,
-            (context.getScaledWindowHeight() - 11) / 2,
-            24, frameV[frameIndex], 10, 10);
+                (context.getScaledWindowWidth() - 10) / 2,
+                (context.getScaledWindowHeight() - 11) / 2,
+                24, frameV[frameIndex], 10, 10);
     }
 
 

@@ -14,56 +14,80 @@ public class ClothConfigIntegration {
     protected static Screen getConfigScreen(Screen parent) {
         // Get the previous screen
         ConfigBuilder builder = ConfigBuilder.create()
-            .setParentScreen(MinecraftClient.getInstance().currentScreen)
-            .setTitle(Text.literal("Crosshair Addons Config"));
+                .setParentScreen(MinecraftClient.getInstance().currentScreen)
+                .setTitle(Text.literal("Crosshair Addons Config"));
 
         ConfigCategory generalCategory = builder.getOrCreateCategory(Text.literal("General"));
         ConfigCategory crosshairCategory = builder.getOrCreateCategory(Text.literal("Crosshair"));
         ConfigEntryBuilder entryBuilder = builder.entryBuilder();
 
         generalCategory.addEntry(entryBuilder.startBooleanToggle(Text.literal("Crosshair Addons Enabled"), ConfigManager.modEnabled)
-            .setDefaultValue(ConfigManager.modEnabled)
-            .setTooltip(Text.literal("Should enable crosshair addons"))
-            .setSaveConsumer(newValue -> {
-                ConfigManager.modEnabled = newValue;
-            })
-            .build());
+                .setDefaultValue(ConfigManager.modEnabled)
+                .setTooltip(Text.literal("Should enable crosshair addons"))
+                .setSaveConsumer(newValue -> {
+                    ConfigManager.modEnabled = newValue;
+                })
+                .build());
 
         /**
          *  General Settings
          */
 
         crosshairCategory.addEntry(entryBuilder.startBooleanToggle(Text.literal("Environment Blend"), ConfigManager.environmentBlend)
-            .setDefaultValue(ConfigManager.environmentBlend)
-            .setTooltip(Text.literal("Should addon textures blend in with the environment"))
-            .setSaveConsumer(newValue -> {
-                ConfigManager.environmentBlend = newValue;
-            })
-            .build());
+                .setDefaultValue(ConfigManager.environmentBlend)
+                .setTooltip(Text.literal("Should addon textures blend in with the environment"))
+                .setSaveConsumer(newValue -> {
+                    ConfigManager.environmentBlend = newValue;
+                })
+                .build());
         crosshairCategory.addEntry(entryBuilder.startBooleanToggle(Text.literal("Show In Third Person"), ConfigManager.showInThirdPerson)
-            .setDefaultValue(ConfigManager.showInThirdPerson)
-            .setTooltip(Text.literal("Should addon textures show in third person"))
-            .setSaveConsumer(newValue -> {
-                ConfigManager.showInThirdPerson = newValue;
-            })
-            .build());
+                .setDefaultValue(ConfigManager.showInThirdPerson)
+                .setTooltip(Text.literal("Should addon textures show in third person"))
+                .setSaveConsumer(newValue -> {
+                    ConfigManager.showInThirdPerson = newValue;
+                })
+                .build());
         SubCategoryBuilder crosshairIndicatorSub = entryBuilder.startSubCategory(Text.literal("Crosshair Indicator"));
         crosshairIndicatorSub.add(entryBuilder.startBooleanToggle(Text.literal("Player Indicator"), ConfigManager.playerIndicator)
-            .setDefaultValue(ConfigManager.playerIndicator)
-            .setTooltip(Text.literal(""))
-            .setSaveConsumer(newValue -> {
-                ConfigManager.playerIndicator = newValue;
-            })
-            .build());
+                .setDefaultValue(ConfigManager.playerIndicator)
+                .setTooltip(Text.literal(""))
+                .setSaveConsumer(newValue -> {
+                    ConfigManager.playerIndicator = newValue;
+                })
+                .build());
 
         crosshairIndicatorSub.add(entryBuilder.startBooleanToggle(Text.literal("Mob Indicator"), ConfigManager.mobIndicator)
-            .setDefaultValue(ConfigManager.mobIndicator)
-            .setTooltip(Text.literal(""))
-            .setSaveConsumer(newValue -> {
-                ConfigManager.mobIndicator = newValue;
-            })
-            .build());
+                .setDefaultValue(ConfigManager.mobIndicator)
+                .setTooltip(Text.literal(""))
+                .setSaveConsumer(newValue -> {
+                    ConfigManager.mobIndicator = newValue;
+                })
+                .build());
+
         crosshairCategory.addEntry(crosshairIndicatorSub.setExpanded(true).build());
+
+        /**
+         *  Shield Indicator
+         */
+
+        SubCategoryBuilder shieldIndicatorSub = entryBuilder.startSubCategory(Text.literal("Shield Indicator"));
+        shieldIndicatorSub.add(entryBuilder.startBooleanToggle(Text.literal("Other Players"), ConfigManager.shieldIndicator)
+                .setDefaultValue(ConfigManager.shieldIndicator)
+                .setTooltip(Text.literal("Show indicator when looking at player using a shield"))
+                .setSaveConsumer(newValue -> {
+                    ConfigManager.shieldIndicator = newValue;
+                })
+                .build());
+
+        shieldIndicatorSub.add(entryBuilder.startBooleanToggle(Text.literal("Self"), ConfigManager.shieldSelfIndicator)
+                .setDefaultValue(ConfigManager.shieldSelfIndicator)
+                .setTooltip(Text.literal("Show indicator when you are using a shield"))
+                .setSaveConsumer(newValue -> {
+                    ConfigManager.shieldSelfIndicator = newValue;
+                })
+                .build());
+
+        crosshairCategory.addEntry(shieldIndicatorSub.setExpanded(true).build());
 
         /**
          *  Elytra Indicator
@@ -71,21 +95,21 @@ public class ClothConfigIntegration {
 
         SubCategoryBuilder elytraIndicatorSub = entryBuilder.startSubCategory(Text.literal("Elytra Indicator"));
         elytraIndicatorSub.add(entryBuilder.startBooleanToggle(Text.literal("Enabled"), ConfigManager.elytraIndicator)
-            .setDefaultValue(ConfigManager.elytraIndicator)
-            .setTooltip(Text.literal(""))
-            .setSaveConsumer(newValue -> {
-                ConfigManager.elytraIndicator = newValue;
-            })
-            .build());
+                .setDefaultValue(ConfigManager.elytraIndicator)
+                .setTooltip(Text.literal(""))
+                .setSaveConsumer(newValue -> {
+                    ConfigManager.elytraIndicator = newValue;
+                })
+                .build());
 
         elytraIndicatorSub.add(entryBuilder.startDoubleField(Text.literal("Size"), ConfigManager.elytraSize)
-            .setDefaultValue(ConfigManager.elytraSize)
-            .setTooltip(Text.literal(""))
-            .setSaveConsumer(newValue -> {
-                ConfigManager.elytraSize = newValue;
-            })
+                .setDefaultValue(ConfigManager.elytraSize)
+                .setTooltip(Text.literal(""))
+                .setSaveConsumer(newValue -> {
+                    ConfigManager.elytraSize = newValue;
+                })
 
-            .build());
+                .build());
         crosshairCategory.addEntry(elytraIndicatorSub.setExpanded(true).build());
 
 
@@ -95,31 +119,29 @@ public class ClothConfigIntegration {
 
         SubCategoryBuilder hitmarkerIndicatorSub = entryBuilder.startSubCategory(Text.literal("HitMarker Indicator"));
         hitmarkerIndicatorSub.add(entryBuilder.startBooleanToggle(Text.literal("Enabled"), ConfigManager.hitMarker)
-            .setDefaultValue(ConfigManager.hitMarker)
-            .setTooltip(Text.literal(""))
-            .setSaveConsumer(newValue -> {
-                ConfigManager.hitMarker = newValue;
-            })
-            .build());
+                .setDefaultValue(ConfigManager.hitMarker)
+                .setTooltip(Text.literal(""))
+                .setSaveConsumer(newValue -> {
+                    ConfigManager.hitMarker = newValue;
+                })
+                .build());
         hitmarkerIndicatorSub.add(entryBuilder.startIntSlider(Text.literal("Fade / Animation Speed"), ConfigManager.hitMarkerSpeed, 1, 15)
-            .setDefaultValue(ConfigManager.hitMarkerSpeed)
-            .setTooltip(Text.literal(""))
-            .setSaveConsumer(newValue -> {
-                ConfigManager.hitMarkerSpeed = newValue;
-            })
-            .build());
+                .setDefaultValue(ConfigManager.hitMarkerSpeed)
+                .setTooltip(Text.literal(""))
+                .setSaveConsumer(newValue -> {
+                    ConfigManager.hitMarkerSpeed = newValue;
+                })
+                .build());
         hitmarkerIndicatorSub.add(entryBuilder.startIntSlider(Text.literal("Duration"), ConfigManager.hitMarkerTime, 1, 50)
-            .setDefaultValue(ConfigManager.hitMarkerTime)
-            .setTooltip(Text.literal(""))
-            .setSaveConsumer(newValue -> {
-                ConfigManager.hitMarkerTime = newValue;
-            })
-            .build());
+                .setDefaultValue(ConfigManager.hitMarkerTime)
+                .setTooltip(Text.literal(""))
+                .setSaveConsumer(newValue -> {
+                    ConfigManager.hitMarkerTime = newValue;
+                })
+                .build());
         crosshairCategory.addEntry(hitmarkerIndicatorSub.setExpanded(true).build());
 
         builder.setSavingRunnable(ConfigManager::save);
         return builder.build();
     }
 }
-
-

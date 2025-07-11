@@ -15,6 +15,8 @@ public class ConfigManager {
     public static boolean modEnabled = true;
     public static boolean playerIndicator = true;
     public static boolean mobIndicator = true;
+    public static boolean shieldIndicator = false;
+    public static boolean shieldSelfIndicator = false;
     public static boolean hitMarker = true;
     public static int hitMarkerTime = 15;
     public static boolean elytraIndicator = true;
@@ -30,7 +32,7 @@ public class ConfigManager {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
     public static void save() {
-        ConfigData configData = new ConfigData(modEnabled, playerIndicator, mobIndicator, hitMarker, hitMarkerTime, elytraIndicator, elytraSize, environmentBlend, showInThirdPerson, hitMarkerType, hitMarkerSpeed);
+        ConfigData configData = new ConfigData(modEnabled, playerIndicator, mobIndicator, shieldIndicator, shieldSelfIndicator, hitMarker, hitMarkerTime, elytraIndicator, elytraSize, environmentBlend, showInThirdPerson, hitMarkerType, hitMarkerSpeed);
         try (FileWriter writer = new FileWriter(configFile)) {
             GSON.toJson(configData, writer);
         } catch (IOException e) {
@@ -45,6 +47,8 @@ public class ConfigManager {
                 modEnabled = configData.modEnabled;
                 playerIndicator = configData.playerIndicator;
                 mobIndicator = configData.mobIndicator;
+                shieldIndicator = configData.shieldIndicator != null ? configData.shieldIndicator : false;
+                shieldSelfIndicator = configData.shieldSelfIndicator != null ? configData.shieldSelfIndicator : false;
                 hitMarker = configData.hitMarker;
                 hitMarkerTime = configData.hitMarkerTime;
                 elytraIndicator = configData.elytraIndicator;
@@ -63,6 +67,8 @@ public class ConfigManager {
         boolean modEnabled;
         boolean playerIndicator;
         boolean mobIndicator;
+        Boolean shieldIndicator;
+        Boolean shieldSelfIndicator;
         boolean hitMarker;
         int hitMarkerTime;
         boolean elytraIndicator;
@@ -71,10 +77,13 @@ public class ConfigManager {
         boolean showInThirdPerson;
         HitMarkerTypes hitMarkerType;
         int hitMarkerSpeed;
-        ConfigData(boolean modEnabled, boolean playerIndicator, boolean mobIndicator, boolean hitMarker, int hitMarkerTime, boolean elytraIndicator, double elytraSize, boolean environmentBlend, boolean showInThirdPerson, HitMarkerTypes hitMarkerType, int hitMarkerSpeed) {
+
+        ConfigData(boolean modEnabled, boolean playerIndicator, boolean mobIndicator, boolean shieldIndicator, boolean shieldSelfIndicator, boolean hitMarker, int hitMarkerTime, boolean elytraIndicator, double elytraSize, boolean environmentBlend, boolean showInThirdPerson, HitMarkerTypes hitMarkerType, int hitMarkerSpeed) {
             this.modEnabled = modEnabled;
             this.playerIndicator = playerIndicator;
             this.mobIndicator = mobIndicator;
+            this.shieldIndicator = shieldIndicator;
+            this.shieldSelfIndicator = shieldSelfIndicator;
             this.hitMarker = hitMarker;
             this.hitMarkerTime = hitMarkerTime;
             this.elytraIndicator = elytraIndicator;
