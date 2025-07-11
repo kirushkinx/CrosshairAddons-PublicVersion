@@ -15,7 +15,7 @@ public class ConfigManager {
     public static boolean modEnabled = true;
     public static boolean playerIndicator = true;
     public static boolean mobIndicator = true;
-    public static boolean shieldIndicator = false;
+    public static boolean shieldIndicator = true;
     public static boolean shieldSelfIndicator = false;
     public static boolean hitMarker = true;
     public static int hitMarkerTime = 15;
